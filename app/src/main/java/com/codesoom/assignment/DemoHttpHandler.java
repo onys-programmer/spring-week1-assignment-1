@@ -34,6 +34,7 @@ public class DemoHttpHandler implements HttpHandler {
 
         if(path.startsWith("/tasks/")) {
             Long id = Long.parseLong(path.substring("/tasks/".length()));
+            handleItem(exchange, method, id);
             return;
         }
 
@@ -65,6 +66,13 @@ public class DemoHttpHandler implements HttpHandler {
             System.out.println(body);
 
             send(exchange, 201, "New task is added : " + toJSON(task));
+        }
+    }
+
+    private void handleItem(HttpExchange exchange, String method, Long id) throws IOException {
+        if(method.equals("GET")) {
+            Task task = findTask();
+            send(exchange, 200, toJSON(task));
         }
     }
 
