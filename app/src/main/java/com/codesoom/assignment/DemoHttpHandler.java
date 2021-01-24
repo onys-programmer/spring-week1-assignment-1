@@ -32,6 +32,11 @@ public class DemoHttpHandler implements HttpHandler {
             return;
         }
 
+        if(path.startsWith("/tasks/")) {
+            Long id = Long.parseLong(path.substring("/tasks/".length()));
+            return;
+        }
+
         send(exchange, 200, "나는 진정 행복한 부자가 될 것이다.");
     }
 
