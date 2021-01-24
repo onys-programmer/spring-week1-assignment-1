@@ -71,9 +71,15 @@ public class DemoHttpHandler implements HttpHandler {
 
     private void handleItem(HttpExchange exchange, String method, Long id) throws IOException {
         if(method.equals("GET")) {
-            Task task = findTask();
+            Task task = findTask(id);
             send(exchange, 200, toJSON(task));
         }
+    }
+
+    private Task findTask(Long id) {
+        return tasks.stream().filter(task -> task.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     private Long generateId() {
